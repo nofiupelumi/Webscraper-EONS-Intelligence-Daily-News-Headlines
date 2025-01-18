@@ -35,12 +35,12 @@ jobs:
           wget -q -O google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo dpkg -i google-chrome.deb || sudo apt-get install -f -y
 
-      # # Install ChromeDriver
-      # - name: Install ChromeDriver
-      #   run: |
-      #     wget -q -O chromedriver.zip https://chromedriver.storage.googleapis.com/$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
-      #     unzip chromedriver.zip -d /usr/local/bin/
-      #     chmod +x /usr/local/bin/chromedriver
+      # Install ChromeDriver
+      - name: Install ChromeDriver
+        run: |
+          wget -q -O chromedriver.zip https://chromedriver.storage.googleapis.com/$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
+          unzip chromedriver.zip -d /usr/local/bin/
+          chmod +x /usr/local/bin/chromedriver
 
       # Run the scraper and email script
       - name: Run scraper and email script

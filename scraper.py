@@ -287,12 +287,12 @@ driver.get(url)
 # Print current URL for debugging
 print(f"Navigated to: {driver.current_url}")
 
-# Add cookies (ensure they match the current domain)
+# Define cookies with the correct domain
 cookies = [
-    {"name": "_gcl_au", "value": "1.1.1736853304.1737223145", "domain": "www.ripplesnigeria.com"},
-    {"name": "_fbp", "value": "fb.1.1737223187258.468913121658346388", "domain": "www.ripplesnigeria.com"},
-    {"name": "_gid", "value": "GA1.2.628099475.1737310052", "domain": "www.ripplesnigeria.com"},
-    {"name": "cf_clearance", "value": "o41Lw0EK9oB1J8KhrOSi4LxiywRUsh7mebh1U47XKdQ-1737310076-1.2.1.1", "domain": "www.ripplesnigeria.com"},
+    {"name": "_gcl_au", "value": "1.1.1736853304.1737223145", "domain": ".ripplesnigeria.com"},
+    {"name": "_fbp", "value": "fb.1.1737223187258.468913121658346388", "domain": ".ripplesnigeria.com"},
+    {"name": "_gid", "value": "GA1.2.628099475.1737310052", "domain": ".ripplesnigeria.com"},
+    {"name": "cf_clearance", "value": "o41Lw0EK9oB1J8KhrOSi4LxiywRUsh7mebh1U47XKdQ-1737310076-1.2.1.1", "domain": ".ripplesnigeria.com"},
 ]
 
 for cookie in cookies:

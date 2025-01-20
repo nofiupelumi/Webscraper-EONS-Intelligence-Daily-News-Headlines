@@ -258,8 +258,8 @@ options.add_argument("--proxy-server=http://your-proxy-server:port")
 
 # Initialize WebDriver
 service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service, options=chrome_options)
-
+# driver = webdriver.Chrome(service=service, options=chrome_options)
+driver = webdriver.Chrome(service=service, options=options)
 
 # Set valid custom headers
 driver.execute_cdp_cmd(

@@ -234,10 +234,26 @@ def scrape_ripples():
 
         # Visit the website
         page.goto("https://www.ripplesnigeria.com/")
+        # Wait for network to be idle
         page.wait_for_load_state("networkidle")
+        # Save a screenshot to see the page state
+        page.screenshot(path="debug_screenshot.png", full_page=True)
+
+        # Save the page content to check if it loaded
+        with open("debug_page_content.html", "w", encoding="utf-8") as f:
+            f.write(page.content())
+
+        # page.wait_for_selector("h2")
+        # Increase timeout
+        if page.locator("h2").count() == 0:
+            print("No <h2> tags found on the page.")
+        else:
+            print(f"Found {page.locator('h2').count()} <h2> tags.")
+
+        page.wait_for_selector("h2", timeout=60000)  # 60 seconds timeout
 
         # Scroll down to load all content
-        for _ in range(5):
+        for _ in range(10):
             page.evaluate("window.scrollTo(0, document.body.scrollHeight)")
             page.wait_for_timeout(3000)
 
@@ -252,11 +268,8 @@ def scrape_ripples():
 
             # Visit article page
             page.goto(link)
-            try:
-                page.wait_for_selector("#mvp-content-wrap", timeout=5000)
-                content = page.locator("#mvp-content-wrap").inner_text()
-            except:
-                content = ""
+            page.wait_for_selector("#mvp-content-wrap", timeout=5000)
+            content = page.locator("#mvp-content-wrap").inner_text()
 
             # Check for keywords
             risk_indicator = next((word for word in risk_keywords if word.lower() in content.lower()), 'NO')

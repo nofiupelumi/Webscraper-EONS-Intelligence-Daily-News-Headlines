@@ -114,6 +114,9 @@ jobs:
       
       - name: Install Playwright Browsers
         run: playwright install chromium
+      - name: Test website accessibility
+        run: curl -I https://www.ripplesnigeria.com/
+
 
       - name: Run Scraper Script
         env:

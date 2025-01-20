@@ -243,14 +243,18 @@ case_situation_keywords = ['victims', 'victim', 'injured']
 # chrome_options.add_argument("--no-sandbox")
 # chrome_options.add_argument("--disable-dev-shm-usage")
 # chrome_options.binary_location = "/usr/bin/google-chrome"  # Ensure this is the correct path
+# chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+
+# chrome_options.add_argument("--proxy-server=http://your-proxy-server:port")
+
 options = uc.ChromeOptions()
 options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.binary_location = "/usr/bin/google-chrome"
-chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
 
-chrome_options.add_argument("--proxy-server=http://your-proxy-server:port")
+options.add_argument("--proxy-server=http://your-proxy-server:port")
 
 # Initialize WebDriver
 service = Service(ChromeDriverManager().install())

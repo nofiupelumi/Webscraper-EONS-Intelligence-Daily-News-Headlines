@@ -9,6 +9,12 @@ jobs:
   scrape-and-email:
     runs-on: ubuntu-latest
     steps:
+      - name: Increase Swap Space
+        run: |
+          sudo fallocate -l 4G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
       # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4

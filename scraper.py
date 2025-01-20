@@ -261,10 +261,12 @@ options.add_argument("--proxy-server=http://your-proxy-server:port")
 service = Service(ChromeDriverManager().install())
 # driver = webdriver.Chrome(service=service, options=chrome_options)
 # driver = webdriver.Chrome(service=service, options=options)
+# Merge capabilities into options
 capabilities = DesiredCapabilities.CHROME.copy()
 capabilities["goog:loggingPrefs"] = {"performance": "ALL"}
+options.add_experimental_option("goog:loggingPrefs", capabilities["goog:loggingPrefs"])
 
-driver = webdriver.Chrome(service=service, options=options, desired_capabilities=capabilities)
+driver = webdriver.Chrome(service=service, options=options)
 # Set valid custom headers
 driver.execute_cdp_cmd(
     "Network.setExtraHTTPHeaders",

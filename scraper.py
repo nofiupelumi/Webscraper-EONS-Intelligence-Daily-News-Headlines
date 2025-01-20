@@ -177,8 +177,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
+import undetected_chromedriver.v2 as uc
 from bs4 import BeautifulSoup
 import pandas as pd
+import random
 from datetime import datetime
 import time
 import smtplib
@@ -242,9 +244,12 @@ chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--disable-dev-shm-usage")
 chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
 
+chrome_options.add_argument("--proxy-server=http://your-proxy-server:port")
+
 # Initialize WebDriver
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=chrome_options)
+
 
 # Set valid custom headers
 driver.execute_cdp_cmd(
@@ -263,6 +268,9 @@ driver.execute_cdp_cmd(
 
 # Navigate to the target URL
 url = 'https://www.ripplesnigeria.com/'
+
+
+driver = uc.Chrome()
 driver.get(url)
 
 # Add cookies
@@ -302,7 +310,11 @@ try:
 
         # Visit the article link to extract content
         driver.get(link)
-        time.sleep(2)
+       
+
+        time.sleep(random.uniform(3, 7))
+
+        
 
         # Parse article content
         article_soup = BeautifulSoup(driver.page_source, 'html.parser')

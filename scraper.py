@@ -176,6 +176,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from webdriver_manager.chrome import ChromeDriverManager
 import undetected_chromedriver as uc
 from bs4 import BeautifulSoup
@@ -252,15 +253,18 @@ options.add_argument("--headless")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
 options.binary_location = "/usr/bin/google-chrome"
-# options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36")
 
 options.add_argument("--proxy-server=http://your-proxy-server:port")
 
 # Initialize WebDriver
 service = Service(ChromeDriverManager().install())
 # driver = webdriver.Chrome(service=service, options=chrome_options)
-driver = webdriver.Chrome(service=service, options=options)
+# driver = webdriver.Chrome(service=service, options=options)
+capabilities = DesiredCapabilities.CHROME.copy()
+capabilities["goog:loggingPrefs"] = {"performance": "ALL"}
 
+driver = webdriver.Chrome(service=service, options=chrome_options, desired_capabilities=capabilities)
 # Set valid custom headers
 driver.execute_cdp_cmd(
     "Network.setExtraHTTPHeaders",
@@ -270,8 +274,8 @@ driver.execute_cdp_cmd(
             "accept-encoding": "gzip, deflate, br, zstd",
             "accept-language": "en-US,en;q=0.9",
             "cache-control": "max-age=0",
-            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-        }
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+           }
     },
 )
 

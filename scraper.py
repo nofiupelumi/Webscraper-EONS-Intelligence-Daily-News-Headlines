@@ -264,7 +264,7 @@ service = Service(ChromeDriverManager().install())
 capabilities = DesiredCapabilities.CHROME.copy()
 capabilities["goog:loggingPrefs"] = {"performance": "ALL"}
 
-driver = webdriver.Chrome(service=service, options=chrome_options, desired_capabilities=capabilities)
+driver = webdriver.Chrome(service=service, options=options, desired_capabilities=capabilities)
 # Set valid custom headers
 driver.execute_cdp_cmd(
     "Network.setExtraHTTPHeaders",

@@ -234,7 +234,7 @@ def scrape_ripples():
 
         # Visit the website
         page.goto("https://www.ripplesnigeria.com/")
-        page.wait_for_selector("h2")
+        page.wait_for_load_state("networkidle")
 
         # Scroll down to load all content
         for _ in range(5):
@@ -252,8 +252,11 @@ def scrape_ripples():
 
             # Visit article page
             page.goto(link)
-            page.wait_for_selector("#mvp-content-wrap", timeout=5000)
-            content = page.locator("#mvp-content-wrap").inner_text()
+            try:
+                page.wait_for_selector("#mvp-content-wrap", timeout=5000)
+                content = page.locator("#mvp-content-wrap").inner_text()
+            except:
+                content = ""
 
             # Check for keywords
             risk_indicator = next((word for word in risk_keywords if word.lower() in content.lower()), 'NO')

@@ -92,14 +92,14 @@ name: daily-scraper-and-report
 
 on:
   schedule:
-    - cron: "0 12 * * *"
+    - cron: '54 16 * * *'  # Adjust cron as needed
   workflow_dispatch:
 
 jobs:
   scrape-and-email:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -107,14 +107,25 @@ jobs:
         with:
           python-version: 3.9
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install playwright pandas
-          playwright install
+      
+      - name: Install Playwright Browsers
+        run: playwright install chromium
 
-      - name: Run scraper and email script
+      - name: Run Scraper Script
         env:
           USER_EMAIL: ${{ secrets.USER_EMAIL }}
           USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
         run: python scraper.py
+
+      - name: Upload Debug Artifacts
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: debug-files
+          path: |
+            debug_screenshot.png
+            debug_page_content.html

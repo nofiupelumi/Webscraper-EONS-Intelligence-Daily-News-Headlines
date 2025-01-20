@@ -287,19 +287,19 @@ driver.get(url)
 # Print current URL for debugging
 print(f"Navigated to: {driver.current_url}")
 
-# Define cookies with the correct domain
-cookies = [
-    {"name": "_gcl_au", "value": "1.1.1736853304.1737223145", "domain": ".ripplesnigeria.com"},
-    {"name": "_fbp", "value": "fb.1.1737223187258.468913121658346388", "domain": ".ripplesnigeria.com"},
-    {"name": "_gid", "value": "GA1.2.628099475.1737310052", "domain": ".ripplesnigeria.com"},
-    {"name": "cf_clearance", "value": "o41Lw0EK9oB1J8KhrOSi4LxiywRUsh7mebh1U47XKdQ-1737310076-1.2.1.1", "domain": ".ripplesnigeria.com"},
-]
+# # Define cookies with the correct domain
+# cookies = [
+#     {"name": "_gcl_au", "value": "1.1.1736853304.1737223145", "domain": ".ripplesnigeria.com"},
+#     {"name": "_fbp", "value": "fb.1.1737223187258.468913121658346388", "domain": ".ripplesnigeria.com"},
+#     {"name": "_gid", "value": "GA1.2.628099475.1737310052", "domain": ".ripplesnigeria.com"},
+#     {"name": "cf_clearance", "value": "o41Lw0EK9oB1J8KhrOSi4LxiywRUsh7mebh1U47XKdQ-1737310076-1.2.1.1", "domain": ".ripplesnigeria.com"},
+# ]
 
-for cookie in cookies:
-    driver.add_cookie(cookie)
+# for cookie in cookies:
+#     driver.add_cookie(cookie)
 
-# Refresh to apply cookies
-driver.refresh()
+# # Refresh to apply cookies
+# driver.refresh()
 
 try:
     # Wait for content to load

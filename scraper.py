@@ -246,14 +246,11 @@ chrome_options.add_argument("user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 1
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
-# Set custom headers
+# Set valid custom headers
 driver.execute_cdp_cmd(
     "Network.setExtraHTTPHeaders",
     {
         "headers": {
-            ":authority": "www.ripplesnigeria.com",
-            ":method": "GET",
-            ":scheme": "https",
             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
             "accept-encoding": "gzip, deflate, br, zstd",
             "accept-language": "en-US,en;q=0.9",
@@ -262,6 +259,7 @@ driver.execute_cdp_cmd(
         }
     },
 )
+
 
 # Navigate to the target URL
 url = 'https://www.ripplesnigeria.com/'

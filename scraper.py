@@ -284,12 +284,15 @@ url = 'https://www.ripplesnigeria.com/'
 driver = uc.Chrome(options=options)
 driver.get(url)
 
-# Add cookies
+# Print current URL for debugging
+print(f"Navigated to: {driver.current_url}")
+
+# Add cookies (ensure they match the current domain)
 cookies = [
-    {"name": "_gcl_au", "value": "1.1.1736853304.1737223145"},
-    {"name": "_fbp", "value": "fb.1.1737223187258.468913121658346388"},
-    {"name": "_gid", "value": "GA1.2.628099475.1737310052"},
-    {"name": "cf_clearance", "value": "o41Lw0EK9oB1J8KhrOSi4LxiywRUsh7mebh1U47XKdQ-1737310076-1.2.1.1-DPv3Y3VWsAn8xc_qdpKXrWsY4O_gZdHLRO.1Ex3O0J_XDIl3dnLsVyaUXVjMQblP8uml1NGBk1K.Rsk2WZVq1GamuMVa6WaYAUJm2_DjKTR46ZMFi8.2es6dbAKY3pSw_rmHCZ6gw_5oL6bC5ocgzRRKbCaD2nWIWTzfQPzuZuKrnxF.rRLgSP8uxpkyAqT0EhEUL2fAyHI8AKQxU_xXnL1MEoIIrz0N2StPJJa70ydrjMKI9VUlmkcPMQZNPhe1uWx4hcgpcvO5xe3dvlzCPaGQ_7VzFajKZ52996ezR1E"},
+    {"name": "_gcl_au", "value": "1.1.1736853304.1737223145", "domain": "www.ripplesnigeria.com"},
+    {"name": "_fbp", "value": "fb.1.1737223187258.468913121658346388", "domain": "www.ripplesnigeria.com"},
+    {"name": "_gid", "value": "GA1.2.628099475.1737310052", "domain": "www.ripplesnigeria.com"},
+    {"name": "cf_clearance", "value": "o41Lw0EK9oB1J8KhrOSi4LxiywRUsh7mebh1U47XKdQ-1737310076-1.2.1.1", "domain": "www.ripplesnigeria.com"},
 ]
 
 for cookie in cookies:

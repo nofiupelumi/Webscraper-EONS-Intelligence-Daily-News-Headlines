@@ -88,47 +88,47 @@
 #           USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
 #         run: python scraper.py --debug
 
-name: daily-scraper-and-report
+# name: daily-scraper-and-report
 
-on:
-  schedule:
-    - cron: '54 16 * * *'  # Adjust cron as needed
-  workflow_dispatch:
+# on:
+#   schedule:
+#     - cron: '54 16 * * *'  # Adjust cron as needed
+#   workflow_dispatch:
 
-jobs:
-  scrape-and-email:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+# jobs:
+#   scrape-and-email:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: 3.9
 
-      - name: Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install playwright pandas
+#       - name: Install Dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install playwright pandas
       
-      - name: Install Playwright Browsers
-        run: playwright install chromium
-      - name: Test website accessibility
-        run: curl -I https://www.ripplesnigeria.com/
+#       - name: Install Playwright Browsers
+#         run: playwright install chromium
+#       - name: Test website accessibility
+#         run: curl -I https://www.ripplesnigeria.com/
 
 
-      - name: Run Scraper Script
-        env:
-          USER_EMAIL: ${{ secrets.USER_EMAIL }}
-          USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
-        run: python scraper.py
+#       - name: Run Scraper Script
+#         env:
+#           USER_EMAIL: ${{ secrets.USER_EMAIL }}
+#           USER_PASSWORD: ${{ secrets.USER_PASSWORD }}
+#         run: python scraper.py
 
-      - name: Upload Debug Artifacts
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: debug-files
-          path: |
-            debug_screenshot.png
-            debug_page_content.html
+#       - name: Upload Debug Artifacts
+#         if: failure()
+#         uses: actions/upload-artifact@v3
+#         with:
+#           name: debug-files
+#           path: |
+#             debug_screenshot.png
+#             debug_page_content.html

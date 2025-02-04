@@ -146,5 +146,5 @@ jobs:
     steps:
       - name: Call Google Apps Script to Run Colab
         run: |
-          curl -X GET "https://script.google.com/macros/s/AKfycbwZN0R-UGW_jiSp71zV57Ij7gGdHa6fl0tgUGD6PtUtz13pxejkPWfITmaf76-RHkJK/exec"
+          curl -X GET "https://script.google.com/macros/s/AKfycbxlu64NCDD96yhCQN-0tITHx7Smu52LFGvLN-p36tET0886EqUJBe1pnPaL1Apn3LJE/exec"
 

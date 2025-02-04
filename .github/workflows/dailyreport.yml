@@ -136,7 +136,7 @@ name: Run Colab via Google Apps Script
 
 on:
   schedule:
-    - cron: "54 16 * * *"  
+    - cron: "0 */6 * * *"  # Runs every 6 hours
   workflow_dispatch:  # Allows manual execution if needed
 
 jobs:
@@ -146,5 +146,4 @@ jobs:
     steps:
       - name: Call Google Apps Script to Run Colab
         run: |
-          curl -X GET "https://script.google.com/macros/s/AKfycbxlu64NCDD96yhCQN-0tITHx7Smu52LFGvLN-p36tET0886EqUJBe1pnPaL1Apn3LJE/exec"
-
+          curl -L -X GET "https://script.google.com/macros/s/AKfycbxlu64NCDD96yhCQN-0tITHx7Smu52LFGvLN-p36tET0886EqUJBe1pnPaL1Apn3LJE/exec"

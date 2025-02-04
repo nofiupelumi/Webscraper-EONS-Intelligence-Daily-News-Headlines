@@ -132,3 +132,19 @@
 #           path: |
 #             debug_screenshot.png
 #             debug_page_content.html
+name: Run Colab via Google Apps Script
+
+on:
+  schedule:
+    - cron: "54 16 * * *"  
+  workflow_dispatch:  # Allows manual execution if needed
+
+jobs:
+  run_colab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Call Google Apps Script to Run Colab
+        run: |
+          curl -X GET "https://script.google.com/macros/s/AKfycbwZN0R-UGW_jiSp71zV57Ij7gGdHa6fl0tgUGD6PtUtz13pxejkPWfITmaf76-RHkJK/exec"
+

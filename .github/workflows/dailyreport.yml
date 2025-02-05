@@ -1,3 +1,97 @@
+name: daily-scraper-and-report
+
+on:
+  schedule:
+    - cron: '54 16 * * *'  # Runs daily at  (Adjust as needed)
+  workflow_dispatch:  # Allows manual triggering
+
+jobs:
+  scrape-and-email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Increase Swap Space (Prevents Memory Issues)
+        run: |
+          sudo fallocate -l 4G /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
+
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11  # Use the latest compatible version
+
+      # Install dependencies
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Update CA certificates (Fixes SSL verification issues)
+      - name: Update CA certificates
+        run: sudo apt-get install --reinstall -y ca-certificates
+
+      # Install Google Chrome
+      - name: Install Google Chrome
+        run: |
+          wget -q -O google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome.deb || sudo apt-get install -f -y
+
+      # Install ChromeDriver
+      - name: Install ChromeDriver
+        run: |
+          wget -q -O chromedriver.zip https://chromedriver.storage.googleapis.com/$(curl -sS https://chromedriver.storage.googleapis.com/LATEST_RELEASE)/chromedriver_linux64.zip
+          unzip chromedriver.zip -d /usr/local/bin/
+          chmod +x /usr/local/bin/chromedriver
+
+      # Verify Google Chrome and ChromeDriver Versions
+      - name: Verify Installations
+        run: |
+          google-chrome --version
+          chromedriver --version
+
+      # Test ChromeDriver functionality
+      - name: Test ChromeDriver
+        run: |
+          echo "from selenium import webdriver
+          from selenium.webdriver.chrome.service import Service
+          from selenium.webdriver.chrome.options import Options
+          from webdriver_manager.chrome import ChromeDriverManager
+          options = Options()
+          options.add_argument('--headless')
+          options.add_argument('--no-sandbox')
+          options.add_argument('--disable-dev-shm-usage')
+          driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+          driver.get('https://www.google.com')
+          print(driver.title)
+          driver.quit()" > test_chrome.py
+          python test_chrome.py
+
+      # Test website connectivity
+      - name: Test website connectivity
+        run: curl -I https://eonsintelligence.com/
+
+      # Run the scraper and send email
+      - name: Run Scraper & Send Email
+        env:
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+        run: python scraper.py
+
+
+
+
+
+
+
+
+
 # name: daily-scraper-and-report
 
 # on:
@@ -132,18 +226,34 @@
 #           path: |
 #             debug_screenshot.png
 #             debug_page_content.html
-name: Run Colab via Google Apps Script
+# name: Run Colab via Google Apps Script
 
-on:
-  schedule:
-    - cron: "0 */6 * * *"  # Runs every 6 hours
-  workflow_dispatch:  # Allows manual execution if needed
+# on:
+#   schedule:
+#     - cron: "0 */6 * * *"  # Runs every 6 hours
+#   workflow_dispatch:  # Allows manual execution if needed
 
-jobs:
-  run_colab:
-    runs-on: ubuntu-latest
+# jobs:
+#   run_colab:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Call Google Apps Script to Run Colab
-        run: |
-          curl -L -X GET "https://script.google.com/macros/s/AKfycbxlu64NCDD96yhCQN-0tITHx7Smu52LFGvLN-p36tET0886EqUJBe1pnPaL1Apn3LJE/exec"
+#     steps:
+#       - name: Call Google Apps Script to Run Colab
+#         run: |
+#           curl -L -X GET "https://script.google.com/macros/s/AKfycbxlu64NCDD96yhCQN-0tITHx7Smu52LFGvLN-p36tET0886EqUJBe1pnPaL1Apn3LJE/exec"
+# // function doGet(e) {
+# //   return runColabNotebook();
+# // }
+
+# // function runColabNotebook() {
+# //   var colabURL = "https://colab.research.google.com/drive/1PXw35cddWZkJ9YEnTJesqt9V3GIN5LDB?authuser=0&hl=en";
+  
+# //   var options = {
+# //     "method": "get",
+# //     "muteHttpExceptions": true
+# //   };
+  
+# //   var response = UrlFetchApp.fetch(colabURL, options);
+  
+# //   return ContentService.createTextOutput("Colab notebook execution triggered successfully.");
+# // }
